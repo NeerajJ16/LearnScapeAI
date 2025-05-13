@@ -13,35 +13,28 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
+    question: "What does the app do?",
+    answer: "Our app creates personalized learning roadmaps tailored to your goals, skill level, and schedule. Whether you're starting a new subject or advancing your expertise, we help you stay on track with curated resources, progress tracking, and smart reminders.",
     value: "item-1",
   },
   {
-    question: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
+    question: "Who is this app for?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
+      "The app is ideal for students, professionals, and lifelong learners looking to learn efficiently and stay organized. Whether you're preparing for a certification, switching careers, or simply exploring a new subject, we've got you covered.",
     value: "item-2",
   },
   {
     question:
-      "Lorem ipsum dolor sit amet  Consectetur natus dolores minus quibusdam?",
+      "How do I get started?",
     answer:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore qui nostrum reiciendis veritatis necessitatibus maxime quis ipsa vitae cumque quo?",
+      "Just sign up, select your goal, answer a few quick questions, and your roadmap will be ready in minutes. You can start learning right away!",
     value: "item-3",
   },
   {
-    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit?",
-    answer: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    value: "item-4",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur natus?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
-    value: "item-5",
-  },
+  question: "How can I get in touch with the LearnScape team?",
+  answer: 'You can reach out to us anytime at njawahirani@learnscapeai.com — we\'re happy to help!',
+  value: "item-4",
+},
 ];
 
 export const FAQ = () => {

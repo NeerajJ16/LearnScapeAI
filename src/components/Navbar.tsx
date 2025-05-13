@@ -21,19 +21,15 @@ interface RouteProps {
   label: string
 }
 
-interface NavbarProps {
-  openAuthModal: (mode: "signin" | "signup") => void
-}
-
 const routeList: RouteProps[] = [
   { href: "#about", label: "About" },
   { href: "#howItWorks", label: "Guide" },
   { href: "#services", label: "What's Next" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "#cta", label: "Get Started" },
   { href: "#faq", label: "FAQ" },
 ]
 
-export const Navbar = ({ openAuthModal }: NavbarProps) => {
+export const Navbar = () => {
   const [sheetOpen, setSheetOpen] = useState(false)
 
   return (
@@ -78,26 +74,20 @@ export const Navbar = ({ openAuthModal }: NavbarProps) => {
                       {label}
                     </a>
                   ))}
-                  <button
-                    onClick={() => {
-                      openAuthModal("signin")
-                      setSheetOpen(false)
-                    }}
+                  <a
+                    href="https://app.learnscapeai.com/"
                     className={`border ${buttonVariants({ variant: "secondary" })}`}
                   >
                     <EnterIcon className="mr-2 w-5 h-5" />
                     Sign In
-                  </button>
-                  <button
-                    onClick={() => {
-                      openAuthModal("signup")
-                      setSheetOpen(false)
-                    }}
+                  </a>
+                  <a
+                    href="https://app.learnscapeai.com/signup"
                     className={`border ${buttonVariants({ variant: "secondary" })}`}
                   >
                     <Pencil1Icon className="mr-2 w-5 h-5" />
                     Sign Up
-                  </button>
+                  </a>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -118,20 +108,20 @@ export const Navbar = ({ openAuthModal }: NavbarProps) => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <button
-              onClick={() => openAuthModal("signin")}
+            <a
+              href="https://app.learnscapeai.com/"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
               <EnterIcon className="mr-2 w-5 h-5" />
               Sign In
-            </button>
-            <button
-              onClick={() => openAuthModal("signup")}
+            </a>
+            <a
+              href="https://app.learnscapeai.com/signup"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
               <Pencil1Icon className="mr-2 w-5 h-5" />
               Sign Up
-            </button>
+            </a>
           </div>
         </NavigationMenuList>
       </NavigationMenu>

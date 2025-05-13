@@ -1,166 +1,48 @@
-//import { LogoIcon } from "./Icons";
 import logo from "../assets/logo-2.svg";
 
 export const Footer = () => {
   return (
-    <footer id="footer">
+    <footer id="footer" className="bg-muted/30">
       <hr className="w-11/12 mx-auto" />
 
-      <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-        <div className="col-span-full xl:col-span-2">
-          <a
-            rel="noreferrer noopener"
-            href="/"
-            className="font-bold text-xl flex"
-          >
-             <img src={logo} alt="Logo" className="w-auto h-auto" />
+      <section className="container py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+        {/* Logo Only */}
+        <div className="flex flex-col items-start">
+          <a href="/" className="flex items-center gap-2">
+            <img src={logo} alt="LearnScape Logo" className="w-23 h-auto" />
           </a>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Follow US</h3>
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Github
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Twitter
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Dribbble
-            </a>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Platforms</h3>
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Web
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Mobile
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Desktop
-            </a>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
+        {/* About Links */}
+        <div className="flex flex-col gap-3">
           <h3 className="font-bold text-lg">About</h3>
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Features
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Pricing
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              FAQ
-            </a>
-          </div>
+          <a href="#features" className="opacity-70 hover:opacity-100 transition">Features</a>
+          <a href="#pricing" className="opacity-70 hover:opacity-100 transition">Pricing</a>
+          <a href="#faq" className="opacity-70 hover:opacity-100 transition">FAQ</a>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Community</h3>
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Youtube
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Discord
-            </a>
-          </div>
-
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="#"
-              className="opacity-60 hover:opacity-100"
-            >
-              Twitch
-            </a>
-          </div>
+        {/* Contact */}
+        <div className="flex flex-col gap-3">
+          <h3 className="font-bold text-lg">Contact</h3>
+          <a
+            href="mailto:njawahirani@learnscapeai.com"
+            className="opacity-70 hover:opacity-100 transition underline text-primary"
+          >
+            njawahirani@learnscapeai.com
+          </a>
         </div>
       </section>
 
-      <section className="container pb-14 text-center">
-        <h3>
-          &copy; 2025{" "}
-          <a
-            rel="noreferrer noopener"
-            href="#"
-            className="text-primary transition-all border-primary hover:border-b-2"
-          >
-            Learnscape AI
-          </a>
-        </h3>
+      {/* Copyright */}
+      <section className="container pb-8 text-center text-sm text-muted-foreground">
+        &copy; 2025{" "}
+        <a
+          href="/"
+          className="text-primary hover:underline"
+        >
+          LearnScape AI
+        </a>
+        . All rights reserved.
       </section>
     </footer>
   );
