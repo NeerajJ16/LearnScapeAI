@@ -15,19 +15,15 @@ function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin")
 
-  const openAuthModal = (mode: "signin" | "signup") => {
-    setAuthMode(mode)
-    setIsAuthModalOpen(true)
-  }
 
   return (
     <>
-      <Navbar openAuthModal={openAuthModal} />
+      <Navbar />
       <Hero />
       <About />
       <HowItWorks />
       <Services />
-      <Cta openAuthModal={openAuthModal} />
+      <Cta />
       <FAQ />
       <Footer />
       <ScrollToTop />
