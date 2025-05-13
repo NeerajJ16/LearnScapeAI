@@ -1,13 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { FaGoogle } from "react-icons/fa"
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth"
-import { auth } from "../lib/firebase"
 import ForgotPassword from "./ForgotPassword"
 
 interface SignInProps {
@@ -28,14 +21,16 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
 
   const handleContinue = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) {
-      setErrors({ ...errors, email: "Email is required" })
+    const validationErrors: { email?: string } = {}
+
+    if (!email) validationErrors.email = "Email is required"
+    else if (!validateEmail(email)) validationErrors.email = "Please enter a valid email"
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
       return
     }
-    if (!validateEmail(email)) {
-      setErrors({ ...errors, email: "Please enter a valid email" })
-      return
-    }
+
     setErrors({})
     setStep("password")
   }
@@ -52,45 +47,39 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
-      const user = userCredential.user
+      const formData = new URLSearchParams()
+      formData.append("username", email)
+      formData.append("password", password)
+      formData.append("grant_type", "password") // ✅ Required by OAuth2 password flow
+      formData.append("scope", "")
+      formData.append("client_id", "")
+      formData.append("client_secret", "")
 
-      console.log("Signed in UID:", user.uid)
-      console.log("Email:", user.email)
+      const res = await fetch("http://44.201.125.113:8000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData,
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        const message = data?.detail || `Login failed with status ${res.status}`
+        throw new Error(message)
+      }
+
+      localStorage.setItem("token", data.access_token)
 
       alert("Signed in successfully!")
-      onClose();
+      onClose()
       setTimeout(() => {
         window.location.assign("https://weblearnscape.vercel.app/")
       }, 150)
     } catch (error: any) {
-      console.error("Sign-in failed:", error.message)
-      alert("Sign-in failed: " + error.message)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider()
-    setIsLoading(true)
-
-    try {
-      const result = await signInWithPopup(auth, provider)
-      const user = result.user
-
-      console.log("Google Sign-In UID:", user.uid)
-      console.log("Email:", user.email)
-
-      alert("Signed in with Google!")
-      onClose();
-      setTimeout(() => {
-      window.location.assign("https://weblearnscape.vercel.app/")
-    }, 150)
-
-    } catch (error: any) {
-      console.error("Google Sign-In failed:", error.message)
-      alert("Google Sign-In failed: " + error.message)
+      console.error("Sign-in failed:", error)
+      alert("Sign-in failed: " + (error.message || "Unknown error"))
     } finally {
       setIsLoading(false)
     }
@@ -101,7 +90,6 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
     setErrors({})
   }
 
-  // Render the Forgot Password form if activated.
   if (showForgotPassword) {
     return (
       <ForgotPassword
@@ -119,38 +107,16 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
 
       {step === "initial" && (
         <div className="space-y-4">
-          <button
-            onClick={handleGoogleSignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-white py-2.5 text-sm font-medium text-black transition hover:bg-gray-100"
-          >
-            <FaGoogle className="text-lg" />
-            Continue with Google
-          </button>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-600"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-[#121212] px-2 text-gray-400">Or</span>
-            </div>
-          </div>
-
           <form onSubmit={handleContinue}>
             <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="mb-1 block text-sm font-medium text-white"
-              >
+              <label htmlFor="email" className="mb-1 block text-sm font-medium text-white">
                 Email
               </label>
               <input
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                className={`w-full rounded-md border ${
-                  errors.email ? "border-red-500" : "border-gray-700"
-                } bg-[#1a1a1a] px-3 py-2 text-white placeholder-gray-500 focus:border-white focus:outline-none`}
+                className={`w-full rounded-md border ${errors.email ? "border-red-500" : "border-gray-700"} bg-[#1a1a1a] px-3 py-2 text-white placeholder-gray-500 focus:border-white focus:outline-none`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -167,11 +133,7 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
 
           <p className="mt-4 text-center text-sm text-white">
             Don&apos;t have an account?{" "}
-            <button
-              type="button"
-              onClick={() => onSwitchMode("signup")}
-              className="text-white hover:underline"
-            >
+            <button type="button" onClick={() => onSwitchMode("signup")} className="text-white hover:underline">
               Sign up
             </button>
           </p>
@@ -180,32 +142,10 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
 
       {step === "password" && (
         <div className="space-y-4">
-          <button
-            onClick={handleGoogleSignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-white py-2.5 text-sm font-medium text-black transition hover:bg-gray-100"
-          >
-            <FaGoogle className="text-lg" />
-            Continue with Google
-          </button>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-600"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-[#121212] px-2 text-gray-400">OR</span>
-            </div>
-          </div>
-
           <form onSubmit={handleSignIn}>
             <div className="mb-4">
               <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className={`mb-1 block text-sm font-medium ${
-                    errors.password ? "text-red-500" : "text-white"
-                  }`}
-                >
+                <label htmlFor="password" className={`mb-1 block text-sm font-medium ${errors.password ? "text-red-500" : "text-white"}`}>
                   Password
                 </label>
                 <button
@@ -219,9 +159,7 @@ export default function SignIn({ onClose, onSwitchMode }: SignInProps) {
               <input
                 id="password"
                 type="password"
-                className={`w-full rounded-md border ${
-                  errors.password ? "border-red-500" : "border-gray-700"
-                } bg-[#1a1a1a] px-3 py-2 text-white placeholder-gray-500 focus:border-white focus:outline-none`}
+                className={`w-full rounded-md border ${errors.password ? "border-red-500" : "border-gray-700"} bg-[#1a1a1a] px-3 py-2 text-white placeholder-gray-500 focus:border-white focus:outline-none`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
