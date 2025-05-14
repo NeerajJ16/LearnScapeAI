@@ -28,7 +28,7 @@ export const Footer = () => {
             href="mailto:njawahirani@learnscapeai.com"
             className="opacity-70 hover:opacity-100 transition underline text-primary"
           >
-            njawahirani@learnscapeai.com
+            contact@learnscapeai.com
           </a>
         </div>
       </section>
