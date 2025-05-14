@@ -32,7 +32,7 @@ const FAQList: FAQProps[] = [
   },
   {
   question: "How can I get in touch with the LearnScape team?",
-  answer: 'You can reach out to us anytime at njawahirani@learnscapeai.com — we\'re happy to help!',
+  answer: 'You can reach out to us anytime at contact@learnscapeai.com — we\'re happy to help!',
   value: "item-4",
 },
 ];
